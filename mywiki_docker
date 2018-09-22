@@ -23,9 +23,13 @@ docker-machine  stop <machine_name>
 
 ### USE DOCKER ####
 
-docker run (-d background mode) -p <localport>:<container port> --name <name> <distribution>
+docker run (-d background mode) -p <localport>:<container port> 
+        --name <name> <distribution>
         --restart (no/on-failure/unless-stopped/always)
-        
+        --rm Delete when shell stop
+        -i Keep STDIN open event if not attached (?!)
+        -t allocate a pseudo TTY (go with -i)
+
 docker container ls --all    :All even stopped
                     -q       : quiet mode 
 
@@ -36,18 +40,20 @@ docker container    attach <id/name> (acces to container)
 CTRL+P CTRL+Q : Leave container properly  
 
 
-# IMAGES 
+### IMAGES ### 
 
 docker image ls
     List images 
-docker build -t nameofimage ./path
+docker build -t <nameofimage> <path>
 
-## Share images 
+Share images 
 docker login
 docker tag image username/repository:tag
 
 
-# errors : 
+
+
+### errors ###
 
 docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
     installer docker.app ou passer par docker-machine 
