@@ -21,6 +21,9 @@ docker-machine  stop <machine_name>
 
 
 
+
+
+
 ### USE DOCKER ####
 
 docker run (-d background mode) -p <localport>:<container port> 
@@ -29,17 +32,33 @@ docker run (-d background mode) -p <localport>:<container port>
         --rm Delete when shell stop
         -i Keep STDIN open event if not attached (?!)
         -t allocate a pseudo TTY (go with -i)
+        --mount <my_volume>:<dest_volume_dir>
 
-docker container ls --all    :All even stopped
+docker  update [--name, ...] <container_name>
+
+docker container ls --all    : All even stopped
                     -q       : quiet mode 
 
 
 docker container    attach <id/name> (acces to container)
                     start <>
                     stop <>
-CTRL+P CTRL+Q : Leave container properly  
+CTRL+P CTRL+Q : Leave container properly if avalaible  
 
 
+
+
+### VOLUMES ### (cf Manage Container's Memory)
+
+docker volume   create <my-vol_name>
+                ls
+                inspect <my-vol> (go {{mounts}})
+                rm <my-vol>
+
+    #Must be insered on docker run else, be McGyver :
+        #docker commit <container_without_vol_id> <newimage>
+        # build newimage with volume
+        
 ### IMAGES ### 
 
 docker image ls
@@ -50,8 +69,14 @@ Share images
 docker login
 docker tag image username/repository:tag
 
+### DOCKER SERVICES ### 
 
 
+
+### Manage Container's Memory ###
+Filesystem : Follow the container's Fs architecture
+Volume : Inside container, Managed by Docker / easy to share using Docker CLI
+tmpfs mount : tmp files erased when containers stopped - Only on Linux, not shareable data
 
 ### errors ###
 
@@ -63,7 +88,7 @@ docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is t
 
 
 
-## From docker 
+### DOCKER DOCS ###
 docker build -t friendlyhello .  # Create image using this directory's Dockerfile
 docker run -p 4000:80 friendlyhello  # Run "friendlyname" mapping port 4000 to 80
 docker run -d -p 4000:80 friendlyhello         # Same thing, but in detached mode
