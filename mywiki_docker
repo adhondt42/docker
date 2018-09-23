@@ -26,13 +26,15 @@ docker-machine  stop <machine_name>
 
 ### USE DOCKER ####
 
-docker run (-d background mode) -p <localport>:<container port> 
-        --name <name> <distribution>
-        --restart (no/on-failure/unless-stopped/always)
-        --rm Delete when shell stop
-        -i Keep STDIN open event if not attached (?!)
-        -t allocate a pseudo TTY (go with -i)
-        --mount <my_volume>:<dest_volume_dir>
+docker run (-d background mode) 
+        --name      <name>
+        --restart   (no/on-failure/unless-stopped/always)
+        --rm        Delete when shell stop
+        -i          Keep STDIN open event if not attached (?!)
+        -t          allocate a pseudo TTY (go with -i)
+        -p          <localport>:<container port>        // Set up listening port
+        --mount     <my_volume>:<container_vol_dest>    // Set up Volume
+        --link      <container_name><container_alias>   //add link to another container 
 
 docker  update [--name, ...] <container_name>
 
@@ -46,6 +48,9 @@ docker container    attach <id/name> (acces to container)
 CTRL+P CTRL+Q : Leave container properly if avalaible  
 
 
+docker logs <options> <container>
+            -f      continue log
+            ... : https://docs.docker.com/v17.12/engine/reference/commandline/logs/#description
 
 
 ### VOLUMES ### (cf Manage Container's Memory)
