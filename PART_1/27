@@ -1,0 +1,6 @@
+# Récuperer les logs en continu d’une des tasks du service engineering-bay
+
+docker logs -f $(docker ps -lq)
+
+#last + quiet 
+# https://docs.docker.com/engine/reference/commandline/ps/

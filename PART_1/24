@@ -3,4 +3,4 @@
 #et ceux-ci seront à votre libre convenance. Ce service sera sur le reseau overmind
 
 
-docker service create --name orbital-command -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=root --hostname rabbit_db --network overmind rabbitmq
+docker service create --name orbital-command -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=root --hostname rabbit_db --network overmind -p 8080:15672 rabbitmq
