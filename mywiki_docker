@@ -1,130 +1,129 @@
 ### Mywiki Docker ### 
 
-#installation
-brew install Docker
-brew install docker-machine
-test: docker run hello-world
+    #####################
+### INSTALL             ###
+    #####################
 
-### DOCKER_MACHINE ### 
+    brew install Docker
+    brew install docker-machine
+    test: docker run hello-world
 
-docker-machine create -d <driver (virtualbox?)> <machine_name>
-    
+    #####################
+### DOCKER_MACHINE      ### 
+    #####################
+
+    docker-machine  create -d <driver (virtualbox?)> <machine_name>
+                    ssh <vm> "cmd"
+                    stop <vm>
+                    start <vm>
+                    rm <vm>
+
     # Assign ENV to docker-machine 
     eval "$(docker-machine env <machine_name>)"
-    # Check ENV 
-    env
 
 
-docker-machine  stop <machine_name>
-                start <>
-                rm <>
+    #####################
+### USE DOCKER          ###
+    #####################
+
+    docker run (-d background mode) 
+            --name      <name>
+            --restart   (no/on-failure/unless-stopped/always)
+            --rm        Delete when shell stop
+            -i          Keep STDIN open event if not attached (?!)
+            -t          allocate a pseudo TTY (go with -i)
+            -p          <localport>:<container port>        // Set up listening port
+            --mount     <my_volume>:<container_vol_dest>    // Set up Volume
+            --link      <container_name><container_alias>   //add link to another container 
+            --network="netname" : Connect to specified "netname" network
+    docker  update [--name, ...] <container_name>
+
+    docker container ls --all    : All even stopped
+                        -q       : quiet mode 
 
 
+    docker container    attach <id/name> (acces to container)
+                        start <>
+                        stop <>
+    CTRL+P CTRL+Q : Leave container properly if avalaible  
 
 
+    docker logs <options> <container>
+                -f      continue log
+                ... : https://docs.docker.com/v17.12/engine/reference/commandline/logs/#description
 
 
-### USE DOCKER ####
+    #####################
+### SWARM MANAGEMENT    ###
+    #####################
 
-docker run (-d background mode) 
-        --name      <name>
-        --restart   (no/on-failure/unless-stopped/always)
-        --rm        Delete when shell stop
-        -i          Keep STDIN open event if not attached (?!)
-        -t          allocate a pseudo TTY (go with -i)
-        -p          <localport>:<container port>        // Set up listening port
-        --mount     <my_volume>:<container_vol_dest>    // Set up Volume
-        --link      <container_name><container_alias>   //add link to another container 
+    docker-machine ssh <v1> "docker swarm init --advertise-addr <vm1_ip>"           # init the VM as swarm Manager 
+                            "docker swarm join-token -q worker"                     # View join token
+                            "docker node ls"                                        # List the nodes in your swarm
 
-docker  update [--name, ...] <container_name>
-
-docker container ls --all    : All even stopped
-                    -q       : quiet mode 
-
-
-docker container    attach <id/name> (acces to container)
-                    start <>
-                    stop <>
-CTRL+P CTRL+Q : Leave container properly if avalaible  
-
-
-docker logs <options> <container>
-            -f      continue log
-            ... : https://docs.docker.com/v17.12/engine/reference/commandline/logs/#description
-
-
-### VOLUMES ### (cf Manage Container's Memory)
-
-docker volume   create <my-vol_name>
-                ls
-                inspect <my-vol> (go {{mounts}})
-                rm <my-vol>
-
-    #Must be insered on "$>docker run ..." else, be McGyver :
-        #docker commit <container_without_vol_id> <newimage>
-        # build newimage with volume
         
+    docker-machine ssh <v2> "docker swarm join --token <token_v1> <v1_ip>:2377"     # Define a swarm as 
+    #                                                                               #Always run docker swarm init and docker swarm join with port 2377 (the swarm management port), or no port at all and let it take the default.
+    #                                                                               #The machine IP addresses returned by docker-machine ls include port 2376, which is the Docker daemon port. Do not use this port 
+    #
+    #                       "docker swarm leave (-f)"                                    # -f: Make master leave, kill swarm                                  # Make the worker leave the swarm
+
+    #src: https://docs.docker.com/get-started/part4/#recap-and-cheat-sheet-optional
 
 
-### SWARM MANAGEMENT ###
+    #####################
+### NETWORK             ###
+    #####################  
 
-docker-machine ssh <v1> "docker swarm init --advertise-addr <vm1_ip>"           # init the VM as swarm Manager 
-                        "docker swarm join-token -q worker"                     # View join token
-                        "docker node ls"                                        # List the nodes in your swarm
+    3 main networks type:
+        Bridge  : (default) Used when your applications run in standalone containers that need to communicate.
+        Overlay : Connect multiple Docker daemons and hosts together and enable swarm services to communicate with each other.
+        host    : Remove network isolation between the container and the Docker host, and use the host’s networking directly. 
+    When you launch a new container automatically connects to this bridge default network (docker0). You cannot remove this default bridge network
+    docker network create -d (Bridge..) <name>
 
-    
-docker-machine ssh <v2> "docker swarm join --token <token_v1> <v1_ip>:2377"     # Define a swarm as 
-.                                                                               #Always run docker swarm init and docker swarm join with port 2377 (the swarm management port), or no port at all and let it take the default.
-.                                                                               #The machine IP addresses returned by docker-machine ls include port 2376, which is the Docker daemon port. Do not use this port 
-.
-...                     "docker swarm leave"                                    # Make the worker leave the swarm
+    #src: https://docs.docker.com/network/#network-drivers
 
+    #####################
+### IMAGES              ### 
+    #####################
 
-                                                                                   
+    docker image ls
+        List images 
+    docker build -t <nameofimage> <path>
 
-### IMAGES ### 
+    Share images 
+    docker login
+    docker tag image username/repository:tag
 
-docker image ls
-    List images 
-docker build -t <nameofimage> <path>
-
-Share images 
-docker login
-docker tag image username/repository:tag
-
-### DOCKER SERVICES ### 
-
-
-
-### Manage Container's Memory ###
-Filesystem : Follow the container's Fs architecture
-Volume : Inside container, Managed by Docker / easy to share using Docker CLI
-tmpfs mount : tmp files erased when containers stopped - Only on Linux, not shareable data
-
-### errors ###
-
-docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
-    installer docker.app ou passer par docker-machine 
+    #####################
+### DOCKER SERVICES     ### 
+    #####################
 
 
+    #todo
 
+    ###########################
+### MEMORY (vol/bind/tmps)  ###
+    ####################
 
+    Filesystem : Follow the container's Fs architecture
+    Volume : Inside container, Managed by Docker / easy to share using Docker CLI
+    tmpfs mount : tmp files erased when containers stopped - Only on Linux, not shareable data
 
+    ### VOLUMES             ###
 
-### DOCKER DOCS ###
-docker build -t friendlyhello .  # Create image using this directory's Dockerfile
-docker run -p 4000:80 friendlyhello  # Run "friendlyname" mapping port 4000 to 80
-docker run -d -p 4000:80 friendlyhello         # Same thing, but in detached mode
-docker container ls                                # List all running containers
-docker container ls -a             # List all containers, even those not running
-docker container stop <hash>           # Gracefully stop the specified container
-docker container kill <hash>         # Force shutdown of the specified container
-docker container rm <hash>        # Remove specified container from this machine
-docker container rm $(docker container ls -a -q)         # Remove all containers
-docker image ls -a                             # List all images on this machine
-docker image rm <image id>            # Remove specified image from this machine
-docker image rm $(docker image ls -a -q)   # Remove all images from this machine
-docker login             # Log in this CLI session using your Docker credentials
-docker tag <image> username/repository:tag  # Tag <image> for upload to registry
-docker push username/repository:tag            # Upload tagged image to registry
-docker run username/repository:tag                   # Run image from a registry
+        docker volume   create <my-vol_name>
+                        ls
+                        inspect <my-vol> (go {{mounts}})
+                        rm <my-vol>
+            #Must be insered on "$>docker run ..." else, be McGyver :
+                #docker commit <container_without_vol_id> <newimage>
+                # build newimage with volume
+
+    #####################
+###     ERRORS          ###
+    #####################
+
+    docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+        installer docker.app ou passer par docker-machine 
