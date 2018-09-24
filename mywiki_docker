@@ -60,7 +60,7 @@ docker volume   create <my-vol_name>
                 inspect <my-vol> (go {{mounts}})
                 rm <my-vol>
 
-    #Must be insered on docker run else, be McGyver :
+    #Must be insered on "$>docker run ..." else, be McGyver :
         #docker commit <container_without_vol_id> <newimage>
         # build newimage with volume
         
