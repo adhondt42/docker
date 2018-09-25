@@ -1,0 +1,4 @@
+# Augmenter le nombre de repliques du service à 20 
+
+
+docker service scale marines=20

@@ -26,6 +26,11 @@
 ### USE DOCKER          ###
     #####################
 
+    docker exec (-it) <name> (+bash: run bash session)  Run a command in a running container
+    docker attach                                       Attach fd 0,1,2 to container 
+
+
+
     docker run (-d background mode) 
             --name      <name>
             --restart   (no/on-failure/unless-stopped/always)
@@ -36,6 +41,8 @@
             --mount     <my_volume>:<container_vol_dest>    // Set up Volume
             --link      <container_name><container_alias>   //add link to another container 
             --network="netname" : Connect to specified "netname" network
+
+
     docker  update [--name, ...] <container_name>
 
     docker container ls --all    : All even stopped
@@ -45,6 +52,7 @@
     docker container    attach <id/name> (acces to container)
                         start <>
                         stop <>
+
     CTRL+P CTRL+Q : Leave container properly if avalaible  
 
 

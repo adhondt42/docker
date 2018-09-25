@@ -8,10 +8,10 @@
 #navigateur web,à l’adresse IP de votre machine virtuelle sur le port 3000.
 #Vous listerez aussi toutes les commandes nécessaires dans votre rendu.
 
-mkdir docker_19 && echo 'import Flask from flask\napp = Flask(__name__)\n@app.route("/")\ndef hello():\n\treturn "<h1>hello world!</h1>"' > "$(pwd)"/docker_19/hello.py
+mkdir docker_19 && echo 'from flask import Flask\napp = Flask(__name__)\n@app.route("/")\ndef hello():\n\treturn "<h1>hello world!</h1>"' > "$(pwd)"/docker_19/hello.py
 docker run -dt --name Abathur --mount type="bind",source="$(pwd)"/docker_19,target=/root -p 3000:3000 python:2-slim
 docker exec Abathur pip install Flask
-docker exec --env FLASK_APP=/root/hello.py Abathur flask run --host=0.0.0.0 --port=3000
+docker exec --env FLASK_APP=/root/hello.py --env FLASK_ENV=development Abathur flask run --host=0.0.0.0 --port=3000
 
 # src : http://flask.pocoo.org/docs/1.0/quickstart/
 #       https://docs.docker.com/engine/reference/commandline/exec/

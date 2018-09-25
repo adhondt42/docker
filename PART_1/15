@@ -4,3 +4,5 @@
 #contenue dans le container spawning-pool.
 
 docker run --name roach-warden -p 8081:80 --link spawning-pool:mysql -e PMA_HOST=mysql --rm phpmyadmin/phpmyadmin
+
+# u: root / pwd:Kerrigan
