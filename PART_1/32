@@ -1,4 +1,5 @@
 # Forcer l’arrêt et supprimer l’ensemble des containers (tous états confondus), en
 #une seule commande.
 
-docker container kill $(docker container ls --all)
+#docker container kill -s $(docker container ls --all -q)
+docker rm -f $(docker container ls --all -q)
