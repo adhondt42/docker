@@ -13,7 +13,7 @@
 ### DOCKERFILE 			###
     #####################
 
-	src : https://docs.docker.com/engine/reference/builder/
+	src <3 : https://docs.docker.com/engine/reference/builder/
 	best pratice : https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
 	Intrustions (by order) :
@@ -38,8 +38,8 @@
 		ADD hom* /mydir/        						# adds all files starting with "hom"
 		ADD hom?.txt /mydir/    						# ? is replaced with any single character, e.g., "home.txt"
 														#!# path must b inside the context (!(../x/y/))
-														#!# If the <src> parameter of ADD is an archive in a recognised compression format, it will be unpacked
-														#!# If <src> is a URL and <dest> does end with a trailing slash, then the filename is inferred from the URL and the file is downloaded to <dest>/<filename>. For instance, ADD http://example.com/foobar / would create the file /foobar. The URL must have a nontrivial path so that an appropriate filename can be discovered in this case (http://example.com will not work).
+														#!# If the <src> parameter of ADD is an archive in a recognised compression format, it will be uncompressed
+														#!# If <src> is a URL and <dest> does end with '/', filename = <dest>/<filename> 
 														#!# If multiple <src> resources are specified, either directly or due to the use of a wildcard, then <dest> must be a directory, and it must end with a slash /. 
 
 		COPY 											# Same as copy, but keep .tar compressed, doesn't allow URL.
@@ -51,7 +51,7 @@
 
 		USER 
 
-		WORKDIR 
+		WORKDIR <pah/to/workdir>						# Change the container's current working directory
 
 		ONBUILD
 
