@@ -184,6 +184,12 @@
                 # build newimage with volume
 
     #####################
+### TODO : Docker multi-stage ### 
+    #####################
+
+    To secure some data during instance initilization 
+
+    #####################
 ###     ERRORS          ###
     #####################
 

@@ -1,0 +1,27 @@
+TCP/IP : 
+
+
+
+IPV6    : Nouveau protocole 
+IPV4    : premeir grand protocole net 
+IP 3 plages privées :  
+
+10...
+172...
+192...
+
+
+
+Commandes: 
+    lsof -i : Liste de mon écoute 
+
+
+
+
+Docker prod ou dev  ? 
+
+
+nginx sert des fichiers, navigateur repond à Node.js, qui parle à MySQL 
+
+Node ecoute localhost 3000
+Nginx redirige 
