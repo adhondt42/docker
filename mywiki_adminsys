@@ -1,0 +1,8 @@
+
+Reseau:
+    traceroute 
+    lsof -i 
+
+System linux  
+    top htop 
+    systemctl

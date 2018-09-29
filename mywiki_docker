@@ -27,7 +27,7 @@
 			["executable", "ar1", "ar2"]				## exec form
 
 		CMD 											# After build time, not committed. Run on each run. Then, If ENTRYPOINT or during "docker run ...", CMD got interaction rules... cf. entrypoint 
-			... same as run ...
+			... same as run but each build...
 
 		LABEL <key>=<value> ...							# adds metadata to an image. A LABEL is a key-value pair
 
