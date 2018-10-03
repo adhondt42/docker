@@ -1,0 +1,88 @@
+# JAL : SSH / IPTABLES / p4 
+
+## Admnin sys & reseau ## 
+
+# Get lisst of network interface 
+    ifconfig                        -l : quiet mode 
+                <newtork_name>      data about network name (en0...)
+                ...                 ether :xx:xx = MAC Adresse
+
+# Network Statistics = connexion reseau, table de routage etc...  
+    netstat                         -r : routing tables  
+                                    -n : interpret adress as numbers (ex bbox.lan = 192.168.1.254)
+
+# interroger le DNS
+    nslookup (deprecié) <slash16.org>  : get data about DNS and target.
+                         <x.org> + <DNS IP Adress> to change the DNS requested
+    
+    dig <slash16.org>               | grep SERVER  : donne IP du DNS qui repond 
+                                # adresse du DNS que j'utilise : /etc/resolv.conf 
+        # dig : https://memo-linux.com/dig-outil-pour-tout-savoir-sur-les-resolveur-dns/
+
+
+# configure my own DNS value in /etc/hosts (ex: intra.42.fr		46.19.122.85 will send me to 46... when typin intra...)
+
+# interroger une adresse
+    dig <adresse> 
+    ping <adresse>
+    whois <adresse>
+    traceroute <adresse>
+
+
+
+### On debian ###
+
+# usefull packages (apt-get install <x>) : 
+    procps 
+        free, kill, pkill, pgrep, pmap, ps, pwdx, skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w et watch
+    net-tools 
+        arp, ifconfig, netstat, rarp, nameif et route
+    ssh
+    htop
+    cron
+    iptables
+
+# crontab               : TODO 
+# iptables (firewall)   : TODO 
+
+# Get os data versions / debian version  
+    cat /etc/os-release  / cat /etc/debian_version
+
+# rename : hostname <...> (temporary) || /etc/hostname (definitive)
+
+# last start : uptime
+
+# About intern physical memory : 
+    fdisk           : Data about partioning
+    df -h           : Memory avalaible on all disques used. -h = human comprehensible
+    du -h <path>    : Memory avalaible on each argument -h = ""
+
+# about ram 
+    top             : all running process
+    htop            : visual data addition
+    <cmd> &         : run cmd in backgrounds 
+    pidof           : get pid of process
+    kill -9 <pid>   : Kill process with pid 
+
+
+
+
+## SSH ##
+
+Secure SHell (v.2 utilisé) 
+    principalement linux/unix 
+    utilise la cryptographie asymétrique 
+    ssh: programme de co
+    sshd: programme d'ecoute port 22 par default 
+
+
+# info about my ssh configure   
+    /etc/ssh
+
+# get status 
+    service ssh status
+
+# get connected people 
+    who 
+
+
