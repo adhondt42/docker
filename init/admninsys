@@ -1,4 +1,4 @@
-# JAL : SSH / IPTABLES / p4 
+# JAL : SSH / p4 
 
 ## Admnin sys & reseau ## 
 
@@ -63,6 +63,10 @@
     <cmd> &         : run cmd in backgrounds 
     pidof           : get pid of process
     kill -9 <pid>   : Kill process with pid 
+
+
+
+
 
 
 
